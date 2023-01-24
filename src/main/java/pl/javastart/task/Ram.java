@@ -4,6 +4,7 @@ public class Ram extends Component implements Overclockable {
     private int size;
     private int clocking;
     private int temp;
+    private static final int CLOCKING_TO_TEMP_RATIO = 15;
 
     public Ram(String producer, String modelName, String serialNo, int size, int clocking, int temp) {
         super(producer, modelName, serialNo);
@@ -41,9 +42,9 @@ public class Ram extends Component implements Overclockable {
 
     @Override
     public void overclock(int increaseClocking) {
-        if (temp + (increaseClocking / 100) * 15 <= MAX_TEMP) {
+        if (temp + (increaseClocking / CLOCKING_DIVIDER) * CLOCKING_TO_TEMP_RATIO <= MAX_TEMP) {
             clocking += increaseClocking;
-            temp += (increaseClocking / 100) * 15;
+            temp += (increaseClocking / CLOCKING_DIVIDER) * CLOCKING_TO_TEMP_RATIO;
             System.out.println("Taktowanie pamięci ram zostało zwiększone o " + increaseClocking);
         } else {
             throw new OverheatingTemperatureException("Podkręcenie pamięci ram niemożliwe z powodu przekroczenia maksymalnej temperatury.");
